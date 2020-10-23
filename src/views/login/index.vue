@@ -49,6 +49,10 @@
       </div>
 
     </el-form>
+    <img
+        src="https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3"
+        alt=""
+      />
   </div>
 </template>
 
@@ -173,7 +177,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#e3e3e3;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
@@ -182,6 +186,7 @@ $light_gray:#eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  text-align: center;
 
   .login-form {
     position: relative;
