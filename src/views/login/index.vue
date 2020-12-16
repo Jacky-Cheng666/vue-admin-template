@@ -98,6 +98,9 @@ export default {
       immediate: true
     }
   },
+  created() {
+    this.handleLogin();
+  },
   methods: {
     showPwd() {
       if (this.passwordType === 'password') {
@@ -110,19 +113,24 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+      // this.$refs.loginForm.validate(valid => {
+      //   if (valid) {
+      //     this.loading = true
+      //     this.$store.dispatch('user/login', this.loginForm).then(() => {
+      //       this.$router.push({ path: this.redirect || '/' })
+      //       this.loading = false
+      //     }).catch(() => {
+      //       this.loading = false
+      //     })
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
+      let sts_token = window.location.href.split("=")[1].split("#")[0];
+      this.$store.dispatch('user/handleLogin',sts_token).then(res=>{
+        console.log('login_我成功了',res);
+        this.$router.push({ path: this.redirect || '/' })
       })
     }
   }

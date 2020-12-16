@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '数据统计', icon: 'dashboard' }
+      meta: { title: '数据统计', icon: 'dashboard', affix: true }
     }]
   },
 
@@ -61,7 +61,6 @@ export const constantRoutes = [
     redirect: '/pay/payManage',
     name: 'pay',
     meta: { title: '付款', icon: 'el-icon-shopping-cart-full' },
-    redirect: 'noRedirect',
     alwaysShow: true,
     children: [
       {

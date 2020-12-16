@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 
+// 鉴权登录
 export function login(data) {
   return request({
-    url: '/vue-admin-template/user/login',
-    method: 'post',
-    data
+      url: "users/check_sts_token",
+      method: "post",
+      data
   })
 }
 
@@ -16,9 +17,11 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
+// 登出
+export function logout(data) {
   return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+      url: "users/logout",
+      method: "post",
+      data
   })
 }
