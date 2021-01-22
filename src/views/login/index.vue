@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <!-- <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
         <h3 class="title">Login Form</h3>
@@ -41,14 +41,14 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: any</span>
       </div>
 
-    </el-form>
+    </el-form> -->
     <img
         src="https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3"
         alt=""
@@ -113,24 +113,14 @@ export default {
       })
     },
     handleLogin() {
-      // this.$refs.loginForm.validate(valid => {
-      //   if (valid) {
-      //     this.loading = true
-      //     this.$store.dispatch('user/login', this.loginForm).then(() => {
-      //       this.$router.push({ path: this.redirect || '/' })
-      //       this.loading = false
-      //     }).catch(() => {
-      //       this.loading = false
-      //     })
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
       let sts_token = window.location.href.split("=")[1].split("#")[0];
       this.$store.dispatch('user/handleLogin',sts_token).then(res=>{
-        console.log('login_我成功了',res);
-        this.$router.push({ path: this.redirect || '/' })
+        let HOSTArr = window.location.href.split("?")[0].split("");
+        HOSTArr.splice(HOSTArr.length - 1, 1);
+        let hostUrl = HOSTArr.join("");
+        setTimeout(() => {
+          window.location.href = hostUrl;
+        }, 500);
       })
     }
   }
