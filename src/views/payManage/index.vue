@@ -98,7 +98,7 @@
 
     <!-- you can add element-ui's tooltip -->
     <el-tooltip placement="top" content="返回顶部">
-      <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
+      <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="0" transition-name="fade" />
     </el-tooltip>
   </div>
 </template>
