@@ -106,6 +106,7 @@
 <script>
 import { get_pay_demand_list } from '@/api/pay.js'
 import { getToken } from '@/utils/auth'
+import { mapGetters } from 'vuex'
 import BackToTop from '@/components/BackToTop'
 export default {
   name: "payManage",
@@ -138,6 +139,9 @@ export default {
       allRows: []
     };
   },
+  computed:{
+    ...mapGetters(['bookNo'])
+  },
   created() {
     // 如果之前登录过，需要处理url带参数问题。
     // if (window.location.href.includes("index")) {
@@ -158,9 +162,9 @@ export default {
       this.loading = true;
       let res = await get_pay_demand_list({
         access_token: getToken("finance_token"),
-        financial_book_no: 0
+        financial_book_no: this.bookNo
       })
-      console.log('res', res);
+      // console.log('res', res);
       if(res.code===0){
         this.loading = false;
         this.allRows = res.pay_demand_list;

@@ -5,6 +5,13 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <template>
+        <el-tooltip content="切换账本" effect="dark" placement="bottom">
+          <book-select id="book-select" class="right-menu-item hover-effect" />
+        </el-tooltip>
+      </template>
+
+
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img src="@/assets/company_icon.png" class="user-avatar">
@@ -35,11 +42,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import BookSelect from '@/components/BookSelect'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    BookSelect
   },
   computed: {
     ...mapGetters([
@@ -95,7 +104,7 @@ export default {
 
     .right-menu-item {
       display: inline-block;
-      padding: 0 8px;
+      padding: 0 18px;
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
