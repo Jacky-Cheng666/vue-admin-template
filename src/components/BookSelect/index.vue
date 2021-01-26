@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { get_financial_book_list } from '@/api/pay.js'
 import { getToken } from '@/utils/auth'
 export default {
   data() {
@@ -35,15 +34,10 @@ export default {
       this.getFinancialBookList();
   },
   methods: {
-    async getFinancialBookList(){
-        let res = await get_financial_book_list({
-            access_token: getToken("finance_token")
-        });
-        // console.log('账本', res);
-        if(res.code===0){
-            this.sizeOptions = res.financial_book_list;
-            this.$store.commit('zzb/SET_BOOK_NO',this.sizeOptions&&this.sizeOptions.length>0?this.sizeOptions[0].financial_book_no:0)
-        }
+    getFinancialBookList(){
+      this.sizeOptions = JSON.parse(getToken("financial_book_list"))
+      this.$store.commit('zzb/SET_BOOK_NO',this.sizeOptions&&this.sizeOptions.length>0?this.sizeOptions[0].financial_book_no:0)
+      
     },
     SwitchBook(book_no) {
       console.log('book_no', book_no);

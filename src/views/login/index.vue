@@ -59,7 +59,7 @@
 
 <script>
 import { get_financial_book_list } from '@/api/pay.js'
-import { getToken } from '@/utils/auth'
+import { getToken,setToken } from '@/utils/auth'
 export default {
   name: 'Login',
   data() {
@@ -81,16 +81,15 @@ export default {
             access_token: getToken("finance_token")
         });
         if(res.code===0){
+          setToken('financial_book_list', JSON.stringify(res.financial_book_list))
+          // this.$store.commit('zzb/SET_BOOK_NO',res.financial_book_list&&res.financial_book_list.length>0?res.financial_book_list[0].financial_book_no:0)
           // 处理url问题。
           let HOSTArr = window.location.href.split("?")[0].split("");
           HOSTArr.splice(HOSTArr.length - 1, 1);
           let hostUrl = HOSTArr.join("");
           setTimeout(() => {
             window.location.href = hostUrl;
-          }, 3000);
-          console.log('账本',res);
-          this.sizeOptions = res.financial_book_list;
-          this.$store.commit('zzb/SET_BOOK_NO',this.sizeOptions&&this.sizeOptions.length>0?this.sizeOptions[0].financial_book_no:0)
+          }, 2000);
         }
     },
   }
