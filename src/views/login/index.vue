@@ -53,76 +53,46 @@
         src="https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3"
         alt=""
       />
+    <div>系统正在首次加载中，请稍后。。。</div>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-
+import { get_financial_book_list } from '@/api/pay.js'
+import { getToken } from '@/utils/auth'
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
     return {
-      loginForm: {
-        username: 'admin',
-        password: '111111'
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
-    }
-  },
-  watch: {
-    $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
     }
   },
   created() {
     this.handleLogin();
   },
   methods: {
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
     handleLogin() {
       let sts_token = window.location.href.split("=")[1].split("#")[0];
       this.$store.dispatch('user/handleLogin',sts_token).then(res=>{
-        let HOSTArr = window.location.href.split("?")[0].split("");
-        HOSTArr.splice(HOSTArr.length - 1, 1);
-        let hostUrl = HOSTArr.join("");
-        setTimeout(() => {
-          window.location.href = hostUrl;
-        }, 500);
+        this.getFinancialBookList();
       })
-    }
+    },
+    async getFinancialBookList(){
+        let res = await get_financial_book_list({
+            access_token: getToken("finance_token")
+        });
+        if(res.code===0){
+          // 处理url问题。
+          let HOSTArr = window.location.href.split("?")[0].split("");
+          HOSTArr.splice(HOSTArr.length - 1, 1);
+          let hostUrl = HOSTArr.join("");
+          setTimeout(() => {
+            window.location.href = hostUrl;
+          }, 3000);
+          console.log('账本',res);
+          this.sizeOptions = res.financial_book_list;
+          this.$store.commit('zzb/SET_BOOK_NO',this.sizeOptions&&this.sizeOptions.length>0?this.sizeOptions[0].financial_book_no:0)
+        }
+    },
   }
 }
 </script>

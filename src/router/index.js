@@ -57,7 +57,7 @@ export const constantRoutes = [
   {
     path: '/',
     // component: Layout,
-    redirect: '/pay',
+    redirect: '/statisticReport',
     // children: [{
     //   path: 'dashboard',
     //   name: 'Dashboard',
@@ -65,13 +65,24 @@ export const constantRoutes = [
     //   meta: { title: '数据统计', icon: 'dashboard', affix: true }
     // }]
   },
+  {
+    path: '/statisticReport',
+    redirect: '/statisticReport/index',
+    component: Layout,
+    children: [{
+      path: 'index',
+      name: 'statisticReport',
+      component: () => import('@/views/statisticReport/index'),
+      meta: { title: '统计报表', icon:'chart', affix: true},
+    }]
+  },
 
   {
     path: '/pay',
     component: Layout,
     redirect: '/pay/payManage',
     name: 'pay',
-    meta: { title: '付款', icon: 'el-icon-shopping-cart-full' },
+    meta: { title: '付款', icon: 'money' },
     alwaysShow: true,
     children: [
       {
@@ -100,7 +111,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/receive/receiveManage',
     name: 'receive',
-    meta: { title: '收款', icon: 'el-icon-shopping-cart-full' },
+    meta: { title: '收款', icon: 'money' },
     children: [
       {
         path: 'receiveManage',

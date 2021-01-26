@@ -23,9 +23,17 @@ router.beforeEach(async(to, from, next) => {
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-      next({ path: '/' })
+      next({ path: '/statisticReport' })
       NProgress.done()
     } else {
+      // 处理url问题
+      if(window.location.href.includes('?index')){
+        let HOSTArr = window.location.href.split("?")[0].split("");
+        HOSTArr.splice(HOSTArr.length - 1, 1);
+        let hostUrl = HOSTArr.join("");
+        window.location.href = hostUrl;
+        return;
+      }
       next()
       // const hasGetUserInfo = store.getters.name
       // if (hasGetUserInfo) {
