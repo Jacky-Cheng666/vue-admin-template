@@ -45,11 +45,17 @@ const actions = {
   // },
   async handleLogin(context,sts_token){
     return new Promise((resolve,reject)=>{
-      login({sts_token}).then(response=>{
+      login({sts_token}).then(async response=>{
         const { access_token,profile } = response
         context.commit('SET_TOKEN', access_token)
         context.commit('SET_NAME', profile.name)
         setToken('finance_token',access_token)
+
+        // let roles = ['admin'];
+        // const accessRoutes = await context.dispatch('permission/generateRoutes', roles, { root: true })
+        // console.log('accessRoutes',accessRoutes);
+        // router.addRoutes(accessRoutes)
+
         resolve(response)
       }).catch(error=>{
         reject(error)
@@ -61,28 +67,20 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
+        let data = {
+          avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+          introduction: "I am a super administrator",
+          name: "Super Admin",
+          roles: ["admin"]
         }
-
         const { roles, name, avatar, introduction } = data
-
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
 
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
         resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
+      
     })
   },
 

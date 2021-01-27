@@ -117,7 +117,7 @@ export const constantRoutes = [
         path: 'receiveManage',
         name: 'receiveManage',
         component: () => import('@/views/payManage/index'),
-        meta: { title: '收款管理', icon: 'table' },
+        meta: { title: '收款管理', icon: 'table', affix: true },
       },
       {
         path: 'receiveRecords',
